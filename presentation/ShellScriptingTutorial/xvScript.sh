@@ -1,17 +1,26 @@
 #!/bin/bash
 
-# Author: Arya Khaligh
+# Author: Arya Khaligh (bartararya@gmail.com)
+# Year: 2019 
 
-read -p "Run script? [y/N] : " USER_INPUT
-if [ $USER_INPUT = 'y' ]
-then
-    echo "yes"
-elif [ $USER_INPUT = 'N' ]
-then
-    echo "no"
-else
-    echo "wrong_input"
-fi
+
+CheckInput () {
+    read -p "Run script? [y/N] : " USER_INPUT
+    if [ $USER_INPUT = 'y' ]
+    then
+        echo -e "Yes, starting ... \n\n"
+        return 0
+    elif [ $USER_INPUT = 'N' ]
+    then
+        echo "No"
+        exit 0
+    else
+        echo "wrong_input"
+        CheckInput
+    fi
+}
+
+CheckInput
 
 
 # XV6_FOLDER="xv6-script"
