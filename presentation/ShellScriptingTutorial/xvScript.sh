@@ -6,14 +6,15 @@
 
 CheckInput () {
     read -p "Run script? [y/N] : " USER_INPUT
-    if [ $USER_INPUT = 'y' ]
+    if [ $USER_INPUT = 'y' -o $USER_INPUT = 'Y' ]
     then
         echo -e "Yes, starting ... \n\n"
         return 0
-    elif [ $USER_INPUT = 'N' ]
-    then
+    
+    elif [ $USER_INPUT = 'N' -o $USER_INPUT = 'n' ]; then
         echo "No"
         exit 0
+    
     else
         echo "wrong_input"
         CheckInput
@@ -21,7 +22,6 @@ CheckInput () {
 }
 
 CheckInput
-
 
 # XV6_FOLDER="xv6-script"
 
