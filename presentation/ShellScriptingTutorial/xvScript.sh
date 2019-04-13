@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Author: Arya Khaligh (bartararya@gmail.com)
-# Year: 2019 
+# Date: 2019 
 
 GetInput () {
-    read -p "Run script? [y/N] : " USER_INPUT
+    read -p "Run script? [y/N] : " USER_INPUT 
     
     if [ $USER_INPUT = 'y' -o $USER_INPUT = 'Y' ]
     then
@@ -36,14 +36,14 @@ MakeError () {
     fi
 }
 
+echo "Running $0 script... "
 GetInput
 
 XV6_FOLDER="xv6-script"
 
 rm -rf ~/$XV6_FOLDER || echo "Error while removing previous $XV6_FOLDER directory."
 
-cd ~
-mkdir $XV6_FOLDER && cd $XV6_FOLDER
+mkdir ~/$XV6_FOLDER && cd ~/$XV6_FOLDER
 
 Clone
 
@@ -52,5 +52,5 @@ cd ~/${XV6_FOLDER}/xv6-public
 mkdir ../tmp && make > ../tmp/make-log.txt
 MakeError $? "Error while making." "Success."
  
-make qemu-nox > /tmp/null
+make qemu-nox 
 MakeError $? "Error running qemu." "Success."
