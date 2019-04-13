@@ -3,12 +3,12 @@
 # Author: Arya Khaligh (bartararya@gmail.com)
 # Year: 2019 
 
-
-CheckInput () {
+GetInput () {
     read -p "Run script? [y/N] : " USER_INPUT
+    
     if [ $USER_INPUT = 'y' -o $USER_INPUT = 'Y' ]
     then
-        echo -e "Yes, starting ... \n\n"
+        echo -e "Yes, starting... \n\n"
         return 0
     
     elif [ $USER_INPUT = 'N' -o $USER_INPUT = 'n' ]; then
@@ -21,27 +21,36 @@ CheckInput () {
     fi
 }
 
-CheckInput
+Clone () {
+    mkdir xv6-public
+    cp ~/ali/xv6-public/* xv6-public
+}
 
-# XV6_FOLDER="xv6-script"
+MakeError () {
+    if [ $1 -ne 0 ]
+    then
+        echo $2
+        exit 1
+    else
+        echo $3
+    fi
+}
 
-# rm -rf ~/$XV6_FOLDER
+GetInput
 
-# cd ~
-# mkdir $XV6_FOLDER && cd $XV6_FOLDER
+XV6_FOLDER="xv6-script"
 
-# mkdir xv6-public
-# cp ~/ali/xv6-public/* xv6-public
+rm -rf ~/$XV6_FOLDER || echo "Error while removing previous $XV6_FOLDER directory."
 
-# cd ~/${XV6_FOLDER}/xv6-public
+cd ~
+mkdir $XV6_FOLDER && cd $XV6_FOLDER
 
-# mkdir ../tmp
-# make > ../tmp/make-log.txt
+Clone
 
-# if [ $? -ne 0 ]
-# then
-#     echo "Error while making xv6."
-#     exit 1
-# fi
+cd ~/${XV6_FOLDER}/xv6-public
 
-# make qemu-nox
+mkdir ../tmp && make > ../tmp/make-log.txt
+MakeError $? "Error while making." "Success."
+ 
+make qemu-nox > /tmp/null
+MakeError $? "Error running qemu." "Success."
