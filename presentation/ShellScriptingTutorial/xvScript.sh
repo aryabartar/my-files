@@ -23,7 +23,7 @@ GetInput () {
 
 Clone () {
     mkdir xv6-public
-    cp ~/ali/xv6-public/* xv6-public
+    cp ~/ali/xv6-public/* ~/$XV6_FOLDER/xv6-public # Why $XV6_FOLDER is accessable?
 }
 
 MakeError () {
@@ -34,6 +34,13 @@ MakeError () {
     else
         echo $3
     fi
+}
+
+EmptyGit () {
+    rm -rf .git
+    git init
+    git add .
+    git commit -m "First commit"
 }
 
 echo "Running $0 script... "
@@ -52,5 +59,8 @@ cd ~/${XV6_FOLDER}/xv6-public
 mkdir ../tmp && make > ../tmp/make-log.txt
 MakeError $? "Error while making." "Success."
  
-make qemu-nox 
-MakeError $? "Error running qemu." "Success."
+
+EmptyGit
+
+# make qemu-nox 
+# MakeError $? "Error running qemu." "Success."
